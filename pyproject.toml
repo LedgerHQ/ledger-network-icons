@@ -1,0 +1,33 @@
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+[project]
+name = "ledger-network-icons"
+version = "0.0.1"
+requires-python = "==3.12.*"
+dependencies = [
+    "Pillow>=11.1.0",
+    "Wand>=0.6.13",
+]
+
+[project.scripts]
+validate-icons = "scripts.validate.validate_icons:main"
+icon-to-nbgl = "scripts.icon_to_nbgl.icon_to_nbgl:main"
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "pre-commit",
+    "ruff",
+]
+
+[tool.pdm.scripts]
+post_install = "pre-commit install"
+lint.help = "Run all linters/formatters"
+lint.shell = "pre-commit run --all-files"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
