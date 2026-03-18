@@ -18,6 +18,6 @@ repos:
         name: Validate icons
         entry: pdm run validate-icons
         language: system
-        files: ^(icons/|scripts/validate/|scripts/icon_to_nbgl/)
+        files: ^(icons/|icon_scripts/validate/|icon_scripts/icon_to_nbgl/)
         pass_filenames: false
         stages: [pre-commit]

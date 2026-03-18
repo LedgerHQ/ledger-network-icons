@@ -11,7 +11,7 @@ Shared network chain icons for Ledger devices, used by [app-ethereum](https://gi
 │       ├── chain_1_48px.gif       # Apex (monochrome)
 │       ├── chain_1_64px.gif       # Stax / Flex (16-color grayscale)
 │       └── ...
-├── scripts/
+├── icon_scripts/
 │   ├── resize/
 │   │   └── resize_icon.sh         # Generate icons from a source image
 │   ├── validate/
@@ -39,7 +39,7 @@ Shared network chain icons for Ledger devices, used by [app-ethereum](https://gi
 ### Imagemagick dependency
 
 - Imagemagick headers/libs are required for icon validation
-- Imagemagick CLI is required to run `scripts/resize/resize_icon.sh`
+- Imagemagick CLI is required to run `icon_scripts/resize/resize_icon.sh`
 
 On Ubuntu, it can be installed with:
 ```
@@ -73,7 +73,7 @@ This installs all dependencies (including dev tools like pre-commit) and automat
 1. Run the resize script with your source icon and chain ID:
 
 ```bash
-scripts/resize/resize_icon.sh SOURCE_ICON.png 42161
+icon_scripts/resize/resize_icon.sh SOURCE_ICON.png 42161
 ```
 
 This generates three files in `icons/ethereum/`:

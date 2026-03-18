@@ -12,8 +12,8 @@ dependencies = [
 ]
 
 [project.scripts]
-validate-icons = "scripts.validate.validate_icons:main"
-icon-to-nbgl = "scripts.icon_to_nbgl.icon_to_nbgl:main"
+validate-icons = "icon_scripts.validate.validate_icons:main"
+icon-to-nbgl = "icon_scripts.icon_to_nbgl.icon_to_nbgl:main"
 
 [tool.pdm.dev-dependencies]
 dev = [

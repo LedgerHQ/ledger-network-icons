@@ -23,7 +23,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from scripts.icon_to_nbgl.icon_to_nbgl import ConversionException, check_glyph
+from icon_scripts.icon_to_nbgl.icon_to_nbgl import ConversionException, check_glyph
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 REPO_ROOT = SCRIPT_DIR.parent.parent
