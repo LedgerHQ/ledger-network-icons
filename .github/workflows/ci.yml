@@ -1,0 +1,13 @@
+name: CI
+on: [pull_request]
+jobs:
+  validate:
+    runs-on: public-ledgerhq-shared-small
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pdm-project/setup-pdm@v4
+        with:
+          python-version-file: pyproject.toml
+      - run: sudo apt-get update && sudo apt-get install -y libmagickwand-dev
+      - run: pdm install --dev
+      - run: pdm run validate-icons
