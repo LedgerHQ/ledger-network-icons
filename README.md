@@ -1,6 +1,7 @@
 # Ledger Network Icons
 
-Shared network chain icons for Ledger devices, used by [app-ethereum](https://github.com/LedgerHQ/app-ethereum) as a git submodule.
+Icons for Ledger devices secure screens.
+Only EVM networks are currently supported.
 
 ## Project Structure
 
@@ -15,7 +16,7 @@ Shared network chain icons for Ledger devices, used by [app-ethereum](https://gi
 │   ├── resize/
 │   │   └── resize_icon.sh         # Generate icons from a source image
 │   ├── validate/
-│   │   └── validate_icons.py      # CI validation
+│   │   └── validate_icons.py      # Validation script
 │   └── icon_to_nbgl/
 │       └── icon_to_nbgl.py        # Convert icon to NBGL device buffer
 └── .github/workflows/
@@ -68,18 +69,20 @@ pdm install --dev
 
 This installs all dependencies (including dev tools like pre-commit) and automatically sets up the git pre-commit hooks.
 
-## Add a New Network Icon
+## Procedure to add a new network icon
 
-1. Run the resize script with your source icon and chain ID:
+1. Using a source icon of decent quality in GIF or PNG, run the resize script with the chain ID to use:
 
 ```bash
 icon_scripts/resize/resize_icon.sh SOURCE_ICON.png 42161
 ```
 
-This generates three files in `icons/ethereum/`:
+This generates three files:
 - `chain_42161_14px.gif`
 - `chain_42161_48px.gif`
 - `chain_42161_64px.gif`
+
+If the quality is acceptable, copy them to `icons/ethereum/` folder.
 
 2. Validate locally:
 
@@ -87,9 +90,9 @@ This generates three files in `icons/ethereum/`:
 pdm run validate-icons
 ```
 
-3. Commit and open a PR. CI validates automatically.
+3. Commit and open a PR.
 
-## Convert Icon to NBGL Buffer
+## To preview the NBGL Buffer used internally by the Ledger device
 
 ```bash
 pdm run icon-to-nbgl icons/ethereum/chain_1_64px.gif
@@ -99,6 +102,10 @@ Prints the hex-encoded NBGL device buffer to stdout.
 
 ## CI/CD
 
-GitHub Actions run automatically on every PR:
-- Validates all icons (dimensions, colors, format)
-- Checks naming convention and file pairing
+GitHub Actions run automatically on every PR to:
+- Validate all icons (dimensions, colors, format)
+- Check naming convention and file pairing
+
+## Next steps
+
+Once the PR is submitted, please contact ledger team using the [Developer portal](https://developers.ledger.com/) so that the network can be added to the Ledger Crypto Asset List (CAL).
