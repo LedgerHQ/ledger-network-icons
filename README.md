@@ -108,4 +108,4 @@ GitHub Actions run automatically on every PR to:
 
 ## Next steps
 
-Once the PR is submitted, please contact ledger team using the [Developer portal](https://developers.ledger.com/) so that the network can be added to the Ledger Crypto Asset List (CAL).
+Once the PR is submitted, the ledger team will take care of adding the network to the Ledger Crypto Asset List (CAL).
