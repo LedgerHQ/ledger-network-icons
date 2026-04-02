@@ -90,7 +90,7 @@ If the quality is acceptable, copy them to `icons/ethereum/` folder.
 pdm run validate-icons
 ```
 
-3. Commit and open a PR.
+3. Commit, open a PR and ensure that the CI is green.
 
 ## To preview the NBGL Buffer used internally by the Ledger device
 
