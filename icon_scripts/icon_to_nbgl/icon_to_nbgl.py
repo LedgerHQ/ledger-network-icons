@@ -12,14 +12,13 @@ Usage:
 
 Prints the hex-encoded NBGL buffer to stdout.
 
-Dependencies: Pillow, wand (+ system libmagickwand-dev)
+Dependencies: Pillow
 """
 
 import argparse
 import gzip
 import logging
 import math
-import os
 import re
 import sys
 from enum import IntEnum
@@ -291,50 +290,38 @@ class NbglFileCompression(IntEnum):
 def check_glyph(file: Path, max_nb_colors: int, image_width_pixels: int, image_height_pixels: int) -> None:
     """
     Validate that a glyph is compliant for conversion to NBGL device format.
-    Requires wand + ImageMagick.
     """
-    from wand.color import Color
-    from wand.image import Image as WandImage
-
-    extension = os.path.splitext(file)[1][1:].lower()
+    extension = file.suffix[1:].lower()
     if extension not in ["gif", "bmp", "png"]:
         raise ConversionException(f"Glyph extension should be '.gif', '.bmp', or '.png', not '.{extension}'")
 
-    with WandImage(filename=file) as img:
-        if img.alpha_channel:
+    with Image.open(file) as img:
+        if img.mode in ("RGBA", "LA", "PA") or "transparency" in img.info:
             raise ConversionException("Glyph should have no alpha channel")
 
-        colors = img.colors
+        colors = img.getcolors()
         if colors is None:
             raise ConversionException("Glyph should have the colors defined")
+        num_colors = len(colors)
 
-        if img.type == "bilevel":
+        if img.mode == "1":
             logger.debug("Monochrome image type")
-            if colors != 2:
+            if num_colors != 2:
                 raise ConversionException("Glyph should have only 2 colors")
-            black_found = False
-            white_found = False
-            for color in img.histogram:
-                if color == Color("black"):
-                    black_found = True
-                elif color == Color("white"):
-                    white_found = True
-            if not black_found:
-                raise ConversionException("Glyph should have the black color defined")
-            if not white_found:
-                raise ConversionException("Glyph should have the white color defined")
-            if img.depth not in [1, 8]:
-                raise ConversionException("Glyph should have 1 bit depth")
 
-        elif img.type == "grayscale" or img.type == "palette":
+            pixel_values = {v for _, v in colors}
+            if 0 not in pixel_values:
+                raise ConversionException("Glyph should have the black color defined")
+            if pixel_values == {0}:
+                raise ConversionException("Glyph should have the white color defined")
+
+        elif img.mode in ("L", "P"):
             logger.debug("Grayscale image type")
-            if colors > max_nb_colors:
-                raise ConversionException(f"Glyph can't have more than {max_nb_colors} colors, {colors} found")
-            if img.depth != 8:
-                raise ConversionException("Glyph should have 8 bits depth")
+            if num_colors > max_nb_colors:
+                raise ConversionException(f"Glyph can't have more than {max_nb_colors} colors, {num_colors} found")
 
         else:
-            raise ConversionException(f"Glyph should be Monochrome or Grayscale, it is {img.type}")
+            raise ConversionException(f"Glyph should be Monochrome or Grayscale, it is {img.mode}")
 
         if img.width != image_width_pixels or img.height != image_height_pixels:
             raise ConversionException(f"Glyph should be {image_width_pixels}x{image_height_pixels}px")
