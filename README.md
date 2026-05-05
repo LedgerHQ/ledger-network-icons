@@ -35,18 +35,18 @@ Only EVM networks are currently supported.
 
 - Python 3.12+
 - [PDM](https://pdm-project.org/)
-- Imagemagick
+- ImageMagick CLI (only needed for icon resizing)
 
-### Imagemagick dependency
+### ImageMagick dependency (optional)
 
-- Imagemagick headers/libs are required for icon validation
-- Imagemagick CLI is required to run `icon_scripts/resize/resize_icon.sh`
+ImageMagick CLI is only required to run `icon_scripts/resize/resize_icon.sh` for generating new icons.
+It is **not** needed for validation (`validate-icons`) or conversion (`icon-to-nbgl`), which use Pillow.
 
-On Ubuntu, it can be installed with:
+On Ubuntu:
 ```
-sudo apt-get install libmagickwand-dev
+sudo apt-get install imagemagick
 ```
-On MacOS, with:
+On MacOS:
 ```
 brew install imagemagick
 ```
