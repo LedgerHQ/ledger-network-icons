@@ -4,7 +4,7 @@ build-backend = "pdm.backend"
 
 [project]
 name = "ledger-network-icons"
-version = "0.0.1"
+version = "0.0.2"
 requires-python = "==3.12.*"
 dependencies = [
     "Pillow>=11.1.0",
